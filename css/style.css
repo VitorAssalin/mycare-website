@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
 /* ==========================================================================
-   1. VARIÁVEIS E CONFIGURAÇÕES GLOBAIS
+1. VARIÁVEIS E CONFIGURAÇÕES GLOBAIS
    ========================================================================== */
 :root {
     /* Paleta Principal e Tema */
@@ -15,7 +15,7 @@
     /* Cores de Texto e Títulos */
     --color-text-main: #030303;
     --color-text-dark: #000000;
-    --color-title: #331F19;
+    --color-title: #34221c;
     --color-placeholder: #798252;
     --color-btn-text: #ffffff;
     
@@ -35,13 +35,55 @@
     --bg-faq: rgba(255, 255, 255, 0.25);
     --bg-card: rgba(255, 255, 255, 0.5);
     --bg-card-hover: rgba(255, 255, 255, 0.85);
+    --bg-produto-card: #ffffff;
+    --bg-produto-img: #fafafa;
     
     /* Sombras */
     --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
+/* Cores do Dark Mode */
+.darkmode {
+    /* Cores Principais e Acentos */
+    --header-color: #1E2B20;
+    --background-color: #1A1815;
+    --tertiary-color: #8F6877;
+    --neutral-color: #64708A;
+    --text-color: #A3C4A5;
+    --link-color: #B2CBE0;
+
+    /* Cores de Texto e Títulos */
+    --color-text-main: #F0ECE3;
+    --color-text-dark: #F5F2EB;
+    --color-title: #E5D4B3;
+    --color-placeholder: #9CA676;
+    --color-btn-text: #121713;
+
+    /* Gradiente do Fundo */
+    --bg-gradient-top: #151814;
+    --bg-gradient-middle: #1F1D17;
+    --bg-gradient-bottom: #100C05;
+
+    /* Cores de Bordas, Divisores e Efeitos */
+    --color-border-input: #5D683E;
+    --color-border-light: rgba(240, 236, 227, 0.12);
+    --color-border-divider: rgba(240, 236, 227, 0.18);
+
+    /* Cores Transparentes para Cartões e Campos */
+    --bg-input: rgba(18, 20, 17, 0.65);
+    --bg-pilares: rgba(36, 41, 34, 0.75);
+    --bg-faq: rgba(36, 41, 34, 0.55);
+    --bg-card: rgba(36, 41, 34, 0.75);
+    --bg-card-hover: rgba(48, 55, 45, 0.9);
+    --bg-produto-card: #222620;
+    --bg-produto-img: #2B3029;
+
+    /* Sombras */
+    --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
 /* ==========================================================================
-   2. RESET E ESTRUTURA BASE
+2. RESET E ESTRUTURA BASE
    ========================================================================== */
 * {
     margin: 0;
@@ -65,7 +107,7 @@ body {
 }
 
 /* ==========================================================================
-   3. CABEÇALHO E NAVEGAÇÃO
+3. CABEÇALHO E NAVEGAÇÃO (MENU DROPDOWN FLUTUANTE)
    ========================================================================== */
 header, .cabecalho {
     display: flex;
@@ -82,52 +124,66 @@ header, .cabecalho {
     display: block;
 }
 
-.menu-navegacao {
-    display: flex;
-    gap: 25px;
+.darkmode .logo img {
+    filter: brightness(1.35) contrast(1.05);
 }
 
-.menu-navegacao a, a {
+.menu-hamburguer-btn {
+    background: transparent;
+    border: none;
     color: var(--color-text-dark);
-    text-decoration: none;
-    font-weight: 500;
+    font-size: 2rem;
+    line-height: 1;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.menu-hamburguer-btn:hover,
+.menu-hamburguer-btn:focus {
+    color: var(--text-color);
+    box-shadow: none;
+}
+
+/* Caixa flutuante estilo dropdown */
+.menu-flutuante {
+    background-color: var(--bg-produto-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: 10px;
+    box-shadow: var(--shadow-card);
+    min-width: 220px;
+    padding: 0.5rem 0;
+    margin-top: 8px !important;
+}
+
+.menu-flutuante .dropdown-item {
+    color: var(--color-text-main) !important;
+    padding: 0.65rem 1.2rem;
     font-size: 15px;
-    transition: opacity 0.2s ease;
-}
-
-.menu-navegacao a:hover, a:hover {
-    opacity: 0.5;
-}
-
-.nav-link {
-    display: inline-flex;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
     align-items: center;
-    gap: 20px; 
+    justify-content: center;
 }
 
-.nav-link .bi-cart4 {
-    font-size: 1.1rem;
-    color: #333;
-    vertical-align: middle;
+.menu-flutuante .dropdown-item:hover,
+.menu-flutuante .dropdown-item:focus {
+    background-color: var(--bg-card-hover);
+    opacity: 0.75;
+    color: var(--color-placeholder) !important;
 }
-.nav-link.active {
+
+.menu-flutuante .dropdown-item.active {
+    background-color: transparent;
+    color: var(--text-color) !important;
     font-weight: bold;
-    color: #2b2b2b;
 }
 
-header button {
-    background: transparent; 
-    border: none;             
-    padding: 0;              
-    cursor: pointer;         
-}
-.meu-carrinho-icon {
-    font-size: 60px; 
-    color: #333;      
+.menu-flutuante .dropdown-divider {
+    border-color: var(--color-border-divider);
 }
 
 /* ==========================================================================
-   4. LAYOUT PRINCIPAL E ELEMENTOS DE TEXTO
+4. LAYOUT PRINCIPAL E ELEMENTOS DE TEXTO
    ========================================================================== */
 main {
     flex: 1; 
@@ -147,8 +203,11 @@ section {
     align-items: center;
 }
 
+h1, h2, h3 {
+    color: var(--color-title) !important;
+}
+
 h2 {
-    color: var(--color-title);
     font-size: 1.2rem;
 }
 
@@ -159,7 +218,7 @@ p {
 }
 
 /* ==========================================================================
-   5. FORMULÁRIOS E CONTATO
+5. FORMULÁRIOS E CONTATO
    ========================================================================== */
 .secao-contato {
     width: 100%;
@@ -232,7 +291,7 @@ textarea::placeholder {
 }
 
 /* ==========================================================================
-   6. GRID DE PRODUTOS GERAL
+6. GRID DE PRODUTOS GERAL
    ========================================================================== */
 .produtos-grid {
     display: grid;
@@ -244,9 +303,9 @@ textarea::placeholder {
 }
 
 .produto-item {
-    background-color: #ffffff;
+    background-color: var(--bg-produto-card);
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-card);
     padding: 16px;
     display: flex;
     flex-direction: column;
@@ -280,7 +339,7 @@ textarea::placeholder {
 .produto-titulo {
     font-size: 14px;
     font-weight: normal;
-    color: #333333;
+    color: var(--color-text-main);
     line-height: 1.3;
     margin: 0;
     transition: color 0.2s ease;
@@ -293,16 +352,14 @@ textarea::placeholder {
 .preco {
     font-size: 20px;
     font-weight: bold;
-    color: #2b2b2b;
+    color: var(--color-title);
     margin-top: auto; 
     padding-top: 12px;
 }
 
-/*
-==========================================================================
+/* ==========================================================================
 7. PÁGINA DE DETALHES DO PRODUTO 
-========================================================================== */
-
+   ========================================================================== */
 .produto-detalhe-container {
     max-width: 1100px;
     margin: 40px auto;
@@ -310,9 +367,9 @@ textarea::placeholder {
 }
 
 .produto-detalhe-card {
-    background-color: #ffffff;
+    background-color: var(--bg-produto-card);
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-card);
     display: flex;
     gap: 40px;
     padding: 30px;
@@ -324,7 +381,7 @@ textarea::placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fafafa;
+    background-color: var(--bg-produto-img);
     border-radius: 8px;
     padding: 20px;
 }
@@ -337,7 +394,6 @@ textarea::placeholder {
     border-radius: 8px;
 }
 
-/* Área das Informações (Título, Preço e Textos) */
 .produto-detalhe-info {
     flex: 1;
     display: flex;
@@ -347,7 +403,7 @@ textarea::placeholder {
 
 .produto-detalhe-info h1 {
     font-size: 26px;
-    color: #2b2b2b;
+    color: var(--color-title);
     margin: 0;
     line-height: 1.3;
 }
@@ -355,20 +411,20 @@ textarea::placeholder {
 .preco-detalhe {
     font-size: 32px;
     font-weight: bold;
-    color: #2b2b2b;
+    color: var(--color-title);
     margin: 0;
 }
 
 .descricao-secao h3, 
 .beneficios-secao h3 {
     font-size: 16px;
-    color: #555555;
+    color: var(--color-title);
     margin-bottom: 6px;
 }
 
 .descricao-secao p {
     font-size: 15px;
-    color: #666666;
+    color: var(--color-text-main);
     line-height: 1.5;
     margin: 0;
 }
@@ -376,7 +432,7 @@ textarea::placeholder {
 .beneficios-secao ul {
     margin: 0;
     padding-left: 20px;
-    color: #666666;
+    color: var(--color-text-main);
     font-size: 15px;
     line-height: 1.5;
 }
@@ -393,9 +449,10 @@ textarea::placeholder {
     margin-top: 10px;
     transition: background-color 0.2s ease;
 }
+
 .btn-addCarAll {
-    background-color:transparent;
-    color: #000000;
+    background-color: transparent;
+    color: var(--color-text-dark);
     border: none;
     border-radius: 6px;
     padding: 14px 24px;
@@ -406,12 +463,11 @@ textarea::placeholder {
     transition: background-color 0.2s ease;
 }
 
-.btn-comprar:hover {
+.btn-comprar:hover,
+.btn-addCar:hover {
     background-color: #2968c8;
 }
-.btn-addCar:hover{
-    background-color: #2968c8;
-}
+
 .btn-addCarAll:hover {
     background-color: transparent;
     color: #2968c8;
@@ -429,7 +485,7 @@ textarea::placeholder {
 }
 
 /* ==========================================================================
-   7. RODAPÉ
+8. RODAPÉ
    ========================================================================== */
 footer {
     text-align: center;
@@ -439,7 +495,7 @@ footer {
 }
 
 /* ==========================================================================
-   8. SEÇÃO INSTITUCIONAL / SOBRE NÓS
+9. SEÇÃO INSTITUCIONAL / SOBRE NÓS
    ========================================================================== */
 .secao-info {
     text-align: left;
@@ -469,10 +525,15 @@ footer {
 
 .lista-pilares li {
     background-color: var(--bg-pilares);
+    color: var(--color-text-main);
     padding: 1.2rem;
     border-radius: 10px;
     border-left: 4px solid var(--text-color);
     line-height: 1.5;
+}
+
+.lista-pilares li strong {
+    color: var(--color-title);
 }
 
 .divisor {
@@ -483,7 +544,7 @@ footer {
 }
 
 /* ==========================================================================
-   9. DESTAQUES E BANNERS
+10. DESTAQUES E BANNERS
    ========================================================================== */
 .destaques {
     width: 100%;
@@ -505,6 +566,7 @@ footer {
     cursor: pointer;
     margin-bottom: 1.5rem;
     text-align: center;
+    color: var(--color-title);
 }
 
 .lista-banners-destaque {
@@ -543,17 +605,17 @@ footer {
     text-align: center;
     font-size: 0.95rem;
     line-height: 1.4;
+    color: var(--color-text-main);
 }
 
 /* ==========================================================================
-   10. RESPONSIVIDADE
+11. RESPONSIVIDADE
    ========================================================================== */
 @media (max-width: 768px) {
     .lista-banners-destaque {
         grid-template-columns: 1fr; 
     }
 }
-
 
 /*
 ================================================================================
