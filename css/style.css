@@ -108,7 +108,7 @@ body {
 
 /* ==========================================================================
 3. CABEÇALHO E NAVEGAÇÃO (MENU DROPDOWN FLUTUANTE)
-   ========================================================================== */
+   ========================================================================== */   
 header, .cabecalho {
     display: flex;
     align-items: center;
@@ -155,18 +155,20 @@ header, .cabecalho {
     margin-top: 8px !important;
 }
 
-.menu-flutuante .dropdown-item {
+.menu-flutuante,
+.dropdown-item,
+.theme-switch {
     color: var(--color-text-main) !important;
     padding: 0.65rem 1.2rem;
     font-size: 15px;
     text-decoration: none;
     transition: background-color 0.2s ease;
-    align-items: center;
-    justify-content: center;
 }
 
 .menu-flutuante .dropdown-item:hover,
-.menu-flutuante .dropdown-item:focus {
+.menu-flutuante .dropdown-item:focus,
+.menu-flutuante .theme-switch:hover,
+.menu-flutuante .theme-switch:focus{
     background-color: var(--bg-card-hover);
     opacity: 0.75;
     color: var(--color-placeholder) !important;
@@ -178,8 +180,24 @@ header, .cabecalho {
     font-weight: bold;
 }
 
-.menu-flutuante .dropdown-divider {
-    border-color: var(--color-border-divider);
+.theme-switch i {
+    color: var(--color-text-main);
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+}
+
+/* Tema Claro (padrão): mostra apenas a lua e esconde o sol */
+.theme-switch .bi-sun-fill {
+    display: none !important;
+}
+
+/* Tema Escuro (.darkmode): esconde a lua e mostra apenas o sol */
+body.darkmode .theme-switch .bi-moon-fill {
+    display: none !important;
+}
+
+body.darkmode .theme-switch .bi-sun-fill {
+    display: inline-block !important;
 }
 
 /* ==========================================================================
